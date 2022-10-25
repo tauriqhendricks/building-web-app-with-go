@@ -5,22 +5,33 @@ import (
 	"net/http"
 )
 
+const portNumber = ":8080"
+
+// a function that handles requests needs theses params
+// Home is the home page handler
+func Home(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "This is the home page!")
+}
+
+// About is the about page handler
+func About(w http.ResponseWriter, r *http.Request) {
+	sum := addValues(2, 2)
+	_, _ = fmt.Fprintf(w, fmt.Sprintf("This is the about page and 2 + 2 is %d", sum))
+}
+
+// addValues adds to integers and returns the sum
+func addValues(x, y int) int {
+	return x + y
+}
+
+// main is the main application function
 func main() {
-	// "/" pathname
-	// listening for a request by a web browser
-	// we didnt start any process to say "listen for a requesr"
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		n, err := fmt.Fprintf(w, "Hello, world!")
-		if err != nil {
-			fmt.Println(err)
-		}
+	http.HandleFunc("/", Home)
+	http.HandleFunc("/about", About)
 
-		// Sprintf allows you to return any data type as a string
-		fmt.Println(fmt.Sprintf("Number of bytes written: %d", n))
-	})
-
+	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
 	// listen on port 8080
-	// this return a error
+	// this returns a error
 	// the _ is set the error value
-	_ = http.ListenAndServe(":8000", nil)
+	_ = http.ListenAndServe(portNumber, nil)
 }
