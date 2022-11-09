@@ -15,6 +15,7 @@ func main() {
 	http.HandleFunc("/about", handlers.About)
 
 	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
+
 	// listen on port 8080
 	// this returns a error
 	// the _ is set the error value
